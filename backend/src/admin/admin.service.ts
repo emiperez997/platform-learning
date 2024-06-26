@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { Admin } from "./interfaces/Admin.ts";
-import { CreateAdminDto } from "./dto/CreateAdminDto.ts";
-import { UpdateAdminDto } from "./dto/UpdateAdminDto.ts";
+import { Admin } from "./interfaces/Admin";
+import { CreateAdminDto } from "./dto/CreateAdminDto";
+import { UpdateAdminDto } from "./dto/UpdateAdminDto";
 
 @Injectable()
 export class AdminService {
@@ -16,7 +16,7 @@ export class AdminService {
     });
   }
 
-  async findOne(id: string): Promise<Admin> {
+  async findOne(id: number): Promise<Admin> {
     const admin = await this.prisma.admin.findUnique({
       where: {
         id,
@@ -64,7 +64,7 @@ export class AdminService {
     }
   }
 
-  async update(id: string, admin: UpdateAdminDto): Promise<Admin> {
+  async update(id: number, admin: UpdateAdminDto): Promise<Admin> {
     const adminExists = await this.prisma.admin.findUnique({
       where: {
         id,
@@ -91,7 +91,7 @@ export class AdminService {
     }
   }
 
-  async delete(id: string): Promise<Admin> {
+  async delete(id: number): Promise<Admin> {
     const adminExists = await this.prisma.admin.findUnique({
       where: {
         id,

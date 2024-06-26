@@ -1,19 +1,33 @@
-import { Controller, Delete, Get, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Param,
+  Post,
+  Put,
+} from "@nestjs/common";
 import { StudentService } from "./student.service";
-import { Admin } from "./interfaces/Admin.ts";
+import { Student } from "./interfaces/Student";
+import { CreateStudentDto } from "./dto/CreateStudentDto";
+import { UpdateStudentDto } from "./dto/UpdateStudentDto";
 
 @Controller("/students")
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Get()
-  getStudents(): Promise<Admin[]> {
+  getStudents(): Promise<Student[]> {
     return this.studentService.findAll();
   }
 
   @Get("/:id")
-  getStudentById(id: string): Promise<Admin> {
-    return this.studentService.findOne(id);
+  getStudentById(@Param("id") id: number): Promise<Student> {
+    if (isNaN(Number(id))) {
+      throw new HttpException("Invalid id", 400);
+    }
+    return this.studentService.findOne(Number(id));
   }
 
   @Get("/:id/courses")
@@ -21,23 +35,29 @@ export class StudentController {
     return `GET /students/${id}/courses`;
   }
 
-  @Get("/:id/courses/:courseId")
-  getStudentCourse(id: string, courseId: string): string {
-    return `GET /students/${id}/courses/${courseId}`;
-  }
-
   @Post()
-  createStudent(): string {
-    return "POST /students";
+  createStudent(@Body() student: CreateStudentDto): Promise<Student> {
+    return this.studentService.create(student);
   }
 
   @Put("/:id")
-  updateStudent(id: string): string {
-    return `PUT /students/${id}`;
+  updateStudent(
+    @Param("id") id: number,
+    @Body() student: UpdateStudentDto,
+  ): Promise<Student> {
+    console.log(Number(id));
+
+    if (isNaN(Number(id))) {
+      throw new HttpException("Invalid id", 400);
+    }
+    return this.studentService.update(Number(id), student);
   }
 
   @Delete("/:id")
-  deleteStudent(id: string): string {
-    return `DELETE /students/${id}`;
+  deleteStudent(@Param() id: number): Promise<Student> {
+    if (isNaN(Number(id))) {
+      throw new HttpException("Invalid id", 400);
+    }
+    return this.studentService.delete(Number(id));
   }
 }

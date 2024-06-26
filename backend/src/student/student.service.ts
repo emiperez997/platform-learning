@@ -3,6 +3,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { Student } from "./interfaces/Student";
 import { CreateStudentDto } from "./dto/CreateStudentDto";
 import { UpdateStudentDto } from "./dto/UpdateStudentDto";
+import { hashPassword } from "src/utils/HashPassword";
 
 @Injectable()
 export class StudentService {
@@ -47,12 +48,17 @@ export class StudentService {
     });
 
     if (studentExists) {
-      throw new HttpException("Student already exists", 400);
+      throw new HttpException(
+        "Student already registered with this email",
+        400,
+      );
     }
 
     if (student.status !== "ACTIVE" && student.status !== "INACTIVE") {
       throw new HttpException("Invalid status", 400);
     }
+
+    const hashedPassword = await hashPassword(student.password);
 
     try {
       const studentDB = await this.prisma.student.create({
@@ -60,7 +66,7 @@ export class StudentService {
           firstName: student.firstName,
           lastName: student.lastName,
           email: student.email,
-          password: student.password,
+          password: hashedPassword,
           status: student.status,
         },
       });
