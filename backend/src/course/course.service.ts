@@ -1,10 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { PrismaService } from "src/prisma/prisma.service";
 
-import { CreateCourseDto } from './dto/CreateCourseDto';
-import { Course } from './interfaces/Course';
-import { UpdateInscriptionDto } from 'src/inscription/dto/UpdateInscription';
-import { UpdateCourseDto } from './dto/UpdateCourseDto';
+import { CreateCourseDto } from "./dto/CreateCourseDto";
+import { Course } from "./interfaces/Course";
+import { UpdateCourseDto } from "./dto/UpdateCourseDto";
 
 @Injectable()
 export class CourseService {
@@ -13,7 +12,7 @@ export class CourseService {
   async findAll(): Promise<Course[]> {
     return this.prisma.course.findMany({
       orderBy: {
-        id: 'asc',
+        id: "asc",
       },
     });
   }
@@ -26,7 +25,7 @@ export class CourseService {
     });
 
     if (!course) {
-      throw new HttpException('Course not found', 404);
+      throw new HttpException("Course not found", 404);
     }
 
     return course;
@@ -41,7 +40,7 @@ export class CourseService {
       !course.endDate ||
       !course.teacherId
     ) {
-      throw new HttpException('Invalid data', 400);
+      throw new HttpException("Invalid data", 400);
     }
 
     const teacher = await this.prisma.teacher.findUnique({
@@ -51,7 +50,7 @@ export class CourseService {
     });
 
     if (!teacher) {
-      throw new HttpException('Teacher not found', 404);
+      throw new HttpException("Teacher not found", 404);
     }
 
     try {
@@ -85,7 +84,7 @@ export class CourseService {
     });
 
     if (!courseDB) {
-      throw new HttpException('Course not found', 404);
+      throw new HttpException("Course not found", 404);
     }
 
     try {
@@ -122,7 +121,7 @@ export class CourseService {
     });
 
     if (!courseDB) {
-      throw new HttpException('Course not found', 404);
+      throw new HttpException("Course not found", 404);
     }
 
     try {
