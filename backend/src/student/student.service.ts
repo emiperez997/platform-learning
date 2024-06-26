@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Student } from './interfaces/Student';
-import { CreateStudentDto } from './dto/CreateStudentDto';
-import { UpdateStudentDto } from './dto/UpdateStudentDto';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { PrismaService } from "src/prisma/prisma.service";
+import { Student } from "./interfaces/Student";
+import { CreateStudentDto } from "./dto/CreateStudentDto";
+import { UpdateStudentDto } from "./dto/UpdateStudentDto";
 
 @Injectable()
 export class StudentService {
@@ -11,7 +11,7 @@ export class StudentService {
   async findAll(): Promise<Student[]> {
     return this.prisma.student.findMany({
       orderBy: {
-        id: 'asc',
+        id: "asc",
       },
     });
   }
@@ -24,7 +24,7 @@ export class StudentService {
     });
 
     if (!student) {
-      throw new HttpException('Student not found', 404);
+      throw new HttpException("Student not found", 404);
     }
 
     return student;
@@ -37,7 +37,7 @@ export class StudentService {
       !student.email ||
       !student.password
     ) {
-      throw new HttpException('Invalid data', 400);
+      throw new HttpException("Invalid data", 400);
     }
 
     const studentExists = await this.prisma.student.findUnique({
@@ -47,11 +47,11 @@ export class StudentService {
     });
 
     if (studentExists) {
-      throw new HttpException('Student already exists', 400);
+      throw new HttpException("Student already exists", 400);
     }
 
-    if (student.status !== 'ACTIVE' && student.status !== 'INACTIVE') {
-      throw new HttpException('Invalid status', 400);
+    if (student.status !== "ACTIVE" && student.status !== "INACTIVE") {
+      throw new HttpException("Invalid status", 400);
     }
 
     try {
@@ -79,15 +79,15 @@ export class StudentService {
     });
 
     if (!studentExists) {
-      throw new HttpException('Student not found', 404);
+      throw new HttpException("Student not found", 404);
     }
 
     if (
-      student.status !== 'ACTIVE' &&
-      student.status !== 'INACTIVE' &&
+      student.status !== "ACTIVE" &&
+      student.status !== "INACTIVE" &&
       student.status
     ) {
-      throw new HttpException('Invalid status', 400);
+      throw new HttpException("Invalid status", 400);
     }
 
     try {
@@ -116,7 +116,7 @@ export class StudentService {
     });
 
     if (!studentExists) {
-      throw new HttpException('Student not found', 404);
+      throw new HttpException("Student not found", 404);
     }
 
     try {
