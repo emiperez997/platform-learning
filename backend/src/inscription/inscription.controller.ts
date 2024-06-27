@@ -1,4 +1,50 @@
-import { Controller } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  ValidationPipe,
+} from "@nestjs/common";
+import { InscriptionService } from "./inscription.service";
+import { Inscription } from "./interfaces/Inscription";
+import { CreateInscriptionDto } from "./dto/CreateInscriptionDto";
+import { UpdateInscriptionDto } from "./dto/UpdateInscription";
 
-@Controller('inscription')
-export class InscriptionController {}
+@Controller("inscription")
+export class InscriptionController {
+  constructor(private readonly inscriptionService: InscriptionService) {}
+
+  @Get()
+  async findAll(): Promise<Inscription[]> {
+    return this.inscriptionService.findAll();
+  }
+
+  @Get("/:id")
+  async find(@Param("id", ParseIntPipe) id: number): Promise<Inscription> {
+    return this.inscriptionService.findOne(id);
+  }
+
+  @Post()
+  async create(
+    @Body(ValidationPipe) inscription: CreateInscriptionDto,
+  ): Promise<Inscription> {
+    return this.inscriptionService.create(inscription);
+  }
+
+  @Put("/:id")
+  async update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body(ValidationPipe) inscription: UpdateInscriptionDto,
+  ): Promise<Inscription> {
+    return this.inscriptionService.update(id, inscription);
+  }
+
+  @Delete("/:id")
+  async delete(@Param("id", ParseIntPipe) id: number): Promise<Inscription> {
+    return this.inscriptionService.delete(id);
+  }
+}

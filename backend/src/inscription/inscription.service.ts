@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Inscription } from './interfaces/Inscription';
-import { CreateInscriptionDto } from './dto/CreateInscriptionDto';
-import { UpdateInscriptionDto } from './dto/UpdateInscription';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { PrismaService } from "src/prisma/prisma.service";
+import { Inscription } from "./interfaces/Inscription";
+import { CreateInscriptionDto } from "./dto/CreateInscriptionDto";
+import { UpdateInscriptionDto } from "./dto/UpdateInscription";
 
 @Injectable()
 export class InscriptionService {
@@ -11,7 +11,7 @@ export class InscriptionService {
   async findAll(): Promise<Inscription[]> {
     return this.prisma.inscription.findMany({
       orderBy: {
-        id: 'asc',
+        id: "asc",
       },
     });
   }
@@ -24,25 +24,13 @@ export class InscriptionService {
     });
 
     if (!inscription) {
-      throw new HttpException('Inscription not found', 404);
+      throw new HttpException("Inscription not found", 404);
     }
 
     return inscription;
   }
 
   async create(inscription: CreateInscriptionDto): Promise<Inscription> {
-    if (!inscription.courseId || !inscription.studentId) {
-      throw new HttpException('Invalid data', 400);
-    }
-
-    if (
-      inscription.status !== 'PENDING' &&
-      inscription.status !== 'ACCEPTED' &&
-      inscription.status !== 'REJECTED'
-    ) {
-      throw new HttpException('Invalid status', 400);
-    }
-
     try {
       const inscriptionDB = await this.prisma.inscription.create({
         data: {
@@ -77,15 +65,7 @@ export class InscriptionService {
     });
 
     if (!inscriptionExists) {
-      throw new HttpException('Inscription not found', 404);
-    }
-
-    if (
-      inscription.status !== 'PENDING' &&
-      inscription.status !== 'ACCEPTED' &&
-      inscription.status !== 'REJECTED'
-    ) {
-      throw new HttpException('Invalid status', 400);
+      throw new HttpException("Inscription not found", 404);
     }
 
     try {
@@ -112,7 +92,7 @@ export class InscriptionService {
     });
 
     if (!inscriptionExists) {
-      throw new HttpException('Inscription not found', 404);
+      throw new HttpException("Inscription not found", 404);
     }
 
     try {

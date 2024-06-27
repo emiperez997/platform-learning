@@ -1,6 +1,6 @@
-import { CourseStatus } from '@prisma/client';
-import { Inscription } from 'src/inscription/interfaces/Inscription';
-import { Teacher } from 'src/teacher/interfaces/Teacher';
+import { CourseStatus } from "@prisma/client";
+import { Inscription } from "src/inscription/interfaces/Inscription";
+import { Teacher } from "src/teacher/interfaces/Teacher";
 
 export interface Course {
   id: number;

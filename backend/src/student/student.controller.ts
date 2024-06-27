@@ -3,10 +3,11 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
   Param,
+  ParseIntPipe,
   Post,
   Put,
+  ValidationPipe,
 } from "@nestjs/common";
 import { StudentService } from "./student.service";
 import { Student } from "./interfaces/Student";
@@ -23,10 +24,7 @@ export class StudentController {
   }
 
   @Get("/:id")
-  getStudentById(@Param("id") id: number): Promise<Student> {
-    if (isNaN(Number(id))) {
-      throw new HttpException("Invalid id", 400);
-    }
+  getStudentById(@Param("id", ParseIntPipe) id: number): Promise<Student> {
     return this.studentService.findOne(Number(id));
   }
 
@@ -36,28 +34,22 @@ export class StudentController {
   }
 
   @Post()
-  createStudent(@Body() student: CreateStudentDto): Promise<Student> {
+  createStudent(
+    @Body(ValidationPipe) student: CreateStudentDto,
+  ): Promise<Student> {
     return this.studentService.create(student);
   }
 
   @Put("/:id")
   updateStudent(
-    @Param("id") id: number,
-    @Body() student: UpdateStudentDto,
+    @Param("id", ParseIntPipe) id: number,
+    @Body(ValidationPipe) student: UpdateStudentDto,
   ): Promise<Student> {
-    console.log(Number(id));
-
-    if (isNaN(Number(id))) {
-      throw new HttpException("Invalid id", 400);
-    }
     return this.studentService.update(Number(id), student);
   }
 
   @Delete("/:id")
-  deleteStudent(@Param() id: number): Promise<Student> {
-    if (isNaN(Number(id))) {
-      throw new HttpException("Invalid id", 400);
-    }
+  deleteStudent(@Param("id", ParseIntPipe) id: number): Promise<Student> {
     return this.studentService.delete(Number(id));
   }
 }

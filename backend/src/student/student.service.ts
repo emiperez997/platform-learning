@@ -32,15 +32,6 @@ export class StudentService {
   }
 
   async create(student: CreateStudentDto): Promise<Student> {
-    if (
-      !student.firstName ||
-      !student.lastName ||
-      !student.email ||
-      !student.password
-    ) {
-      throw new HttpException("Invalid data", 400);
-    }
-
     const studentExists = await this.prisma.student.findUnique({
       where: {
         email: student.email,
@@ -52,10 +43,6 @@ export class StudentService {
         "Student already registered with this email",
         400,
       );
-    }
-
-    if (student.status !== "ACTIVE" && student.status !== "INACTIVE") {
-      throw new HttpException("Invalid status", 400);
     }
 
     const hashedPassword = await hashPassword(student.password);
@@ -86,14 +73,6 @@ export class StudentService {
 
     if (!studentExists) {
       throw new HttpException("Student not found", 404);
-    }
-
-    if (
-      student.status !== "ACTIVE" &&
-      student.status !== "INACTIVE" &&
-      student.status
-    ) {
-      throw new HttpException("Invalid status", 400);
     }
 
     try {

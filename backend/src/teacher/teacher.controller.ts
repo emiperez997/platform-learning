@@ -3,17 +3,18 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
   Param,
+  ParseIntPipe,
   Post,
   Put,
-} from '@nestjs/common';
-import { TeacherService } from './teacher.service';
-import { Teacher } from './interfaces/Teacher';
-import { CreateTeacherDto } from './dto/CreateTeacherDto';
-import { UpdateTeacherDto } from './dto/UpdateTeacherDto';
+  ValidationPipe,
+} from "@nestjs/common";
+import { TeacherService } from "./teacher.service";
+import { Teacher } from "./interfaces/Teacher";
+import { CreateTeacherDto } from "./dto/CreateTeacherDto";
+import { UpdateTeacherDto } from "./dto/UpdateTeacherDto";
 
-@Controller('/teachers')
+@Controller("/teachers")
 export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 
@@ -22,38 +23,28 @@ export class TeacherController {
     return this.teacherService.findAll();
   }
 
-  @Get('/:id')
-  async findOne(@Param('id') id: number): Promise<Teacher> {
-    if (isNaN(Number(id))) {
-      throw new HttpException('Invalid id', 400);
-    }
-
+  @Get("/:id")
+  async findOne(@Param("id", ParseIntPipe) id: number): Promise<Teacher> {
     return this.teacherService.findOne(Number(id));
   }
 
   @Post()
-  async create(@Body() teacher: CreateTeacherDto): Promise<Teacher> {
+  async create(
+    @Body(ValidationPipe) teacher: CreateTeacherDto,
+  ): Promise<Teacher> {
     return this.teacherService.create(teacher);
   }
 
-  @Put('/:id')
+  @Put("/:id")
   async update(
-    @Param('id') id: number,
-    @Body() teacher: UpdateTeacherDto,
+    @Param("id", ParseIntPipe) id: number,
+    @Body(ValidationPipe) teacher: UpdateTeacherDto,
   ): Promise<Teacher> {
-    if (isNaN(Number(id))) {
-      throw new HttpException('Invalid id', 400);
-    }
-
     return this.teacherService.update(Number(id), teacher);
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: number): Promise<Teacher> {
-    if (isNaN(Number(id))) {
-      throw new HttpException('Invalid id', 400);
-    }
-
+  @Delete(":id")
+  async delete(@Param("id", ParseIntPipe) id: number): Promise<Teacher> {
     return this.teacherService.delete(Number(id));
   }
 }

@@ -51,8 +51,8 @@ model Course {
     title     String
     description String
     classNumber Int
-    beginDate DateTime
-    endDate   DateTime
+    beginDate DateTime @db.Date
+    endDate   DateTime @db.Date
     status    CourseStatus
     students  Inscription[]
     categories String[]

@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-
 import { CreateCourseDto } from "./dto/CreateCourseDto";
 import { Course } from "./interfaces/Course";
 import { UpdateCourseDto } from "./dto/UpdateCourseDto";
@@ -32,17 +31,6 @@ export class CourseService {
   }
 
   async create(course: CreateCourseDto): Promise<Course> {
-    if (
-      !course.title ||
-      !course.description ||
-      !course.classNumber ||
-      !course.beginDate ||
-      !course.endDate ||
-      !course.teacherId
-    ) {
-      throw new HttpException("Invalid data", 400);
-    }
-
     const teacher = await this.prisma.teacher.findUnique({
       where: {
         id: course.teacherId,
@@ -59,8 +47,8 @@ export class CourseService {
           title: course.title,
           description: course.description,
           classNumber: course.classNumber,
-          beginDate: course.beginDate,
-          endDate: course.endDate,
+          beginDate: new Date(course.beginDate),
+          endDate: new Date(course.endDate),
           status: course.status,
           teacher: {
             connect: {
@@ -87,24 +75,29 @@ export class CourseService {
       throw new HttpException("Course not found", 404);
     }
 
+    let data: any = {
+      title: course.title,
+      description: course.description,
+      beginDate: new Date(course.beginDate),
+      endDate: new Date(course.endDate),
+      categories: course.categories,
+      status: course.status,
+    };
+
+    if (course.teacherId) {
+      data.teacherId = {
+        connect: {
+          id: course.teacherId,
+        },
+      };
+    }
+
     try {
       const courseUpdated = await this.prisma.course.update({
         where: {
           id,
         },
-        data: {
-          title: course.title,
-          description: course.description,
-          beginDate: course.beginDate,
-          endDate: course.endDate,
-          categories: course.categories,
-          status: course.status,
-          teacher: {
-            connect: {
-              id: course.teacherId,
-            },
-          },
-        },
+        data,
       });
 
       return courseUpdated;
