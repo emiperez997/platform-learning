@@ -1,6 +1,6 @@
-import { InscriptionStatus } from '@prisma/client';
-import { Course } from 'src/course/interfaces/Course';
-import { Student } from 'src/student/interfaces/Student';
+import { InscriptionStatus } from "@prisma/client";
+import { Course } from "src/course/interfaces/Course";
+import { Student } from "src/student/interfaces/Student";
 
 export interface Inscription {
   id: number;
@@ -8,7 +8,7 @@ export interface Inscription {
   studentId: number;
   course?: Course[];
   student?: Student[];
-  status: InscriptionStatus;
+  status?: InscriptionStatus;
   createdAt: Date;
   updatedAt: Date;
 }

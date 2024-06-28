@@ -30,6 +30,7 @@ export class CreateCourseDto {
   endDate: Date;
 
   @IsArray()
+  @IsString({ each: true })
   @IsNotEmpty()
   categories: string[];
 

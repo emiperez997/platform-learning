@@ -7,6 +7,7 @@ export interface Course {
   title: string;
   description: string;
   classNumber: number;
+  currentClass: number;
   beginDate: Date;
   endDate: Date;
   status: CourseStatus;

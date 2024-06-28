@@ -1,14 +1,14 @@
-import { Status } from '@prisma/client';
-import { Inscription } from 'src/inscription/interfaces/Inscription';
+import { Status } from "@prisma/client";
+import { Inscription } from "src/inscription/interfaces/Inscription";
 
 export interface Student {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  password?: string;
   status: Status;
+  createdAt?: Date;
+  updatedAt?: Date;
   courses?: Inscription[];
-  createdAt: Date;
-  updatedAt: Date;
 }

@@ -41,10 +41,6 @@ export class AdminService {
       },
     });
 
-    if (status !== "ACTIVE" && status !== "INACTIVE") {
-      throw new HttpException("Invalid status", 400);
-    }
-
     if (adminExists) {
       throw new HttpException("Admin already exists", 400);
     }

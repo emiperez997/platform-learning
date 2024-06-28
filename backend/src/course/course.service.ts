@@ -3,6 +3,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { CreateCourseDto } from "./dto/CreateCourseDto";
 import { Course } from "./interfaces/Course";
 import { UpdateCourseDto } from "./dto/UpdateCourseDto";
+import { CreateCourseData } from "./interfaces/CreateCourseData";
 
 @Injectable()
 export class CourseService {
@@ -12,6 +13,17 @@ export class CourseService {
     return this.prisma.course.findMany({
       orderBy: {
         id: "asc",
+      },
+      include: {
+        teacher: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            status: true,
+          },
+        },
       },
     });
   }
@@ -47,8 +59,10 @@ export class CourseService {
           title: course.title,
           description: course.description,
           classNumber: course.classNumber,
+          currentClass: 0,
           beginDate: new Date(course.beginDate),
           endDate: new Date(course.endDate),
+          categories: course.categories,
           status: course.status,
           teacher: {
             connect: {
@@ -75,17 +89,17 @@ export class CourseService {
       throw new HttpException("Course not found", 404);
     }
 
-    let data: any = {
+    let data: CreateCourseData = {
       title: course.title,
       description: course.description,
-      beginDate: new Date(course.beginDate),
-      endDate: new Date(course.endDate),
+      beginDate: course.beginDate ? new Date(course.beginDate) : undefined,
+      endDate: course.endDate ? new Date(course.endDate) : undefined,
       categories: course.categories,
       status: course.status,
     };
 
     if (course.teacherId) {
-      data.teacherId = {
+      data.teacher = {
         connect: {
           id: course.teacherId,
         },
@@ -102,6 +116,8 @@ export class CourseService {
 
       return courseUpdated;
     } catch (error) {
+      console.log(error.message);
+
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

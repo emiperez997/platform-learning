@@ -34,7 +34,6 @@ export class InscriptionService {
     try {
       const inscriptionDB = await this.prisma.inscription.create({
         data: {
-          status: inscription.status,
           course: {
             connect: {
               id: inscription.courseId,

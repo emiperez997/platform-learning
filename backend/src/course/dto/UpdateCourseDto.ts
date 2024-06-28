@@ -26,6 +26,7 @@ export class UpdateCourseDto {
   endDate?: Date;
 
   @IsArray()
+  @IsString({ each: true })
   @IsOptional()
   categories?: string[];
 

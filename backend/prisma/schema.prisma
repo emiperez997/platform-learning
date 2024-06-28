@@ -51,6 +51,7 @@ model Course {
     title     String
     description String
     classNumber Int
+    currentClass Int
     beginDate DateTime @db.Date
     endDate   DateTime @db.Date
     status    CourseStatus
@@ -64,15 +65,14 @@ model Course {
 
 model Inscription {
     id        Int      @id @default(autoincrement())
-    courseId  Int
-    studentId Int
-    status    InscriptionStatus
+    courseId  Int      @unique
+    studentId Int      @unique
+    status    InscriptionStatus @default(PENDING)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     course    Course    @relation(fields: [courseId], references: [id])
     student   Student   @relation(fields: [studentId], references: [id])
 }
-
 
 enum Status {
     ACTIVE
