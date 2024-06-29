@@ -32,6 +32,20 @@ export class TeacherService {
     return teacher;
   }
 
+  async findByEmail(email: string): Promise<Teacher> {
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!teacher) {
+      throw new HttpException("Teacher not found", 404);
+    }
+
+    return teacher;
+  }
+
   async create(teacher: CreateTeacherDto): Promise<Teacher> {
     const teacherExists = await this.prisma.teacher.findUnique({
       where: {
@@ -45,12 +59,19 @@ export class TeacherService {
 
     const hashedPassword = await hashPassword(teacher.password);
 
+    // Add "teacher" to the email
+    const newEmail =
+      teacher.email.split("@")[0] +
+      "teacher" +
+      "@" +
+      teacher.email.split("@")[1];
+
     try {
       const teacherDB = await this.prisma.teacher.create({
         data: {
           firstName: teacher.firstName,
           lastName: teacher.lastName,
-          email: teacher.email,
+          email: newEmail,
           password: hashedPassword,
           status: teacher.status,
         },

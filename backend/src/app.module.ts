@@ -7,6 +7,8 @@ import { TeacherModule } from './teacher/teacher.module';
 import { AdminModule } from './admin/admin.module';
 import { CourseModule } from './course/course.module';
 import { InscriptionModule } from './inscription/inscription.module';
+import { AuthResolver } from './auth/auth.resolver';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,8 +18,9 @@ import { InscriptionModule } from './inscription/inscription.module';
     CourseModule,
     InscriptionModule,
     ConfigModule.forRoot(),
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthResolver],
 })
 export class AppModule {}
