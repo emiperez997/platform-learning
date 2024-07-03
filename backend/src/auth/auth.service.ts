@@ -14,7 +14,7 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<boolean> {
     // Check if the email is a teacher
-    if (email.split("@")[0].includes("teacher")) {
+    if (email.split("@")[0].includes("+teacher")) {
       const teacher = await this.teacherService.findByEmail(email);
 
       if (!teacher) {
@@ -29,6 +29,39 @@ export class AuthService {
       if (!isPasswordCorrect) {
         return false;
       }
+    }
+
+    // Check if the email is an admin
+    if (email.split("@")[1].includes("admin")) {
+      const admin = await this.adminService.findByEmail(email);
+
+      if (!admin) {
+        return false;
+      }
+
+      const isPasswordCorrect = await comparePasswords(
+        password,
+        admin.password,
+      );
+
+      if (!isPasswordCorrect) {
+        return false;
+      }
+    }
+
+    const student = await this.studentService.findByEmail(email);
+
+    if (!student) {
+      return false;
+    }
+
+    const isPasswordCorrect = await comparePasswords(
+      password,
+      student.password,
+    );
+
+    if (!isPasswordCorrect) {
+      return false;
     }
 
     return true;

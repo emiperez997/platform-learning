@@ -30,6 +30,20 @@ export class AdminService {
     return admin;
   }
 
+  async findByEmail(email: string): Promise<Admin> {
+    const admin = await this.prisma.admin.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!admin) {
+      throw new HttpException("Admin not found", 404);
+    }
+
+    return admin;
+  }
+
   async create(admin: CreateAdminDto): Promise<Admin> {
     if (!admin.email || !admin.password || !admin.status) {
       throw new HttpException("Invalid data", 400);

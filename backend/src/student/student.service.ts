@@ -31,6 +31,20 @@ export class StudentService {
     return student;
   }
 
+  async findByEmail(email: string): Promise<Student> {
+    const student = await this.prisma.student.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!student) {
+      throw new HttpException("Student not found", 404);
+    }
+
+    return student;
+  }
+
   async create(student: CreateStudentDto): Promise<Student> {
     const studentExists = await this.prisma.student.findUnique({
       where: {
