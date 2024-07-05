@@ -7,12 +7,14 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   ValidationPipe,
 } from "@nestjs/common";
 import { CourseService } from "./course.service";
 import { Course } from "./interfaces/Course";
 import { CreateCourseDto } from "./dto/CreateCourseDto";
 import { UpdateCourseDto } from "./dto/UpdateCourseDto";
+import { AuthGuard } from "src/auth/guards/AuthGuard";
 
 @Controller("/course")
 export class CourseController {

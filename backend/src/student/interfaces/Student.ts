@@ -6,7 +6,6 @@ export interface Student {
   firstName: string;
   lastName: string;
   email: string;
-  password?: string;
   status: Status;
   createdAt?: Date;
   updatedAt?: Date;

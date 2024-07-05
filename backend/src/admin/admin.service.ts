@@ -3,6 +3,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { Admin } from "./interfaces/Admin";
 import { CreateAdminDto } from "./dto/CreateAdminDto";
 import { UpdateAdminDto } from "./dto/UpdateAdminDto";
+import { hashPassword } from "src/utils/HashPassword";
 
 @Injectable()
 export class AdminService {
@@ -59,11 +60,17 @@ export class AdminService {
       throw new HttpException("Admin already exists", 400);
     }
 
+    if (!admin.email.includes("@admin")) {
+      throw new HttpException("Invalid password", 400);
+    }
+
+    const hashedPassword = await hashPassword(admin.password);
+
     try {
       const adminDB = await this.prisma.admin.create({
         data: {
           email: admin.email,
-          password: admin.password,
+          password: hashedPassword,
           status: admin.status,
         },
       });

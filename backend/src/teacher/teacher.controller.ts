@@ -7,14 +7,17 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   ValidationPipe,
 } from "@nestjs/common";
 import { TeacherService } from "./teacher.service";
 import { Teacher } from "./interfaces/Teacher";
 import { CreateTeacherDto } from "./dto/CreateTeacherDto";
 import { UpdateTeacherDto } from "./dto/UpdateTeacherDto";
+import { AuthGuard } from "src/auth/guards/AuthGuard";
 
 @Controller("/teachers")
+@UseGuards(AuthGuard)
 export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 

@@ -59,15 +59,12 @@ export class StudentService {
       );
     }
 
-    const hashedPassword = await hashPassword(student.password);
-
     try {
       const studentDB = await this.prisma.student.create({
         data: {
           firstName: student.firstName,
           lastName: student.lastName,
           email: student.email,
-          password: hashedPassword,
           status: student.status,
         },
       });

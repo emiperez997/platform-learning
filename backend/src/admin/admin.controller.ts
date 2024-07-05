@@ -7,14 +7,17 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   ValidationPipe,
 } from "@nestjs/common";
 import { Admin } from "./interfaces/Admin";
 import { AdminService } from "./admin.service";
 import { CreateAdminDto } from "./dto/CreateAdminDto";
 import { UpdateAdminDto } from "./dto/UpdateAdminDto";
+import { AuthGuard } from "src/auth/guards/AuthGuard";
 
 @Controller("/admin")
+@UseGuards(AuthGuard)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 

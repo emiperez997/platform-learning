@@ -3,7 +3,6 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { Teacher } from "./interfaces/Teacher";
 import { CreateTeacherDto } from "./dto/CreateTeacherDto";
 import { ErrorCodes } from "src/utils/ErrorCodes";
-import { hashPassword } from "src/utils/HashPassword";
 import { UpdateTeacherDto } from "./dto/UpdateTeacherDto";
 
 @Injectable()
@@ -57,8 +56,6 @@ export class TeacherService {
       throw new HttpException("Teacher already exists", 400);
     }
 
-    const hashedPassword = await hashPassword(teacher.password);
-
     // Add "teacher" to the email
     const newEmail =
       teacher.email.split("@")[0] +
@@ -72,7 +69,6 @@ export class TeacherService {
           firstName: teacher.firstName,
           lastName: teacher.lastName,
           email: newEmail,
-          password: hashedPassword,
           status: teacher.status,
         },
       });
