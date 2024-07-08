@@ -1,4 +1,4 @@
-import { Body, Controller, Post, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Post, ValidationPipe } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/LoginDto";
 
@@ -11,5 +11,10 @@ export class AuthController {
     @Body(ValidationPipe) body: LoginDto,
   ): Promise<{ token: string }> {
     return this.authService.login(body.email, body.password);
+  }
+
+  @Get()
+  getMessage(): string {
+    return process.env.JWT_SECRET;
   }
 }

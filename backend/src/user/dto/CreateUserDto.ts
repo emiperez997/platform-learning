@@ -1,7 +1,7 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
-import { Status } from "@prisma/client";
+import { Role, Status } from "@prisma/client";
 
-export class CreateAdminDto {
+export class CreateUserDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -15,4 +15,10 @@ export class CreateAdminDto {
   })
   @IsNotEmpty()
   status: Status;
+
+  @IsEnum([Role.ADMIN, Role.COORDINATOR], {
+    message: "Invalid role",
+  })
+  @IsNotEmpty()
+  role: Role;
 }

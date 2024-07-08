@@ -1,10 +1,11 @@
-import { Status } from "@prisma/client";
+import { Role, Status } from "@prisma/client";
 
-export interface Admin {
+export interface User {
   id: number;
   email: string;
   password: string;
   status: Status;
+  role: Role;
   createdAt: Date;
   updatedAt: Date;
 }
