@@ -1,4 +1,5 @@
 import { Status } from "@prisma/client";
+import { Course } from "src/course/interfaces/Course";
 
 export interface Teacher {
   id: number;
@@ -8,5 +9,5 @@ export interface Teacher {
   status: Status;
   createdAt?: Date;
   updatedAt?: Date;
-  courses?: string[];
+  courses?: Course[];
 }

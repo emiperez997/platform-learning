@@ -1,0 +1,23 @@
+<mat-toolbar class="text-white">
+  <button
+    mat-icon-button
+    class="icon text-white"
+    aria-label="Example icon-button with menu icon"
+    (click)="toggleEvent.emit()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="mx-2">Platform Learning</span>
+
+  <span class="spacer"></span>
+
+  @if (getTheme() === "dark") {
+    <button mat-icon-button (click)="toggleTheme()">
+      <mat-icon>light_mode</mat-icon>
+    </button>
+  } @else {
+    <button mat-icon-button (click)="toggleTheme()">
+      <mat-icon>dark_mode</mat-icon>
+    </button>
+  }
+</mat-toolbar>

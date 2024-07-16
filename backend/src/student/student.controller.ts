@@ -17,7 +17,7 @@ import { UpdateStudentDto } from "./dto/UpdateStudentDto";
 import { AuthGuard } from "src/auth/guards/AuthGuard";
 
 @Controller("/students")
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 

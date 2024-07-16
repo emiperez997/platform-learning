@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
 import { Status } from "@prisma/client";
 
 export class UpdateTeacherDto {
@@ -9,6 +9,10 @@ export class UpdateTeacherDto {
   @IsString()
   @IsOptional()
   lastName?: string;
+
+  @IsEmail()
+  @IsOptional()
+  email?: string;
 
   @IsEnum([Status.ACTIVE, Status.INACTIVE], {
     message: "Invalid status",

@@ -94,6 +94,7 @@ export class StudentService {
         data: {
           firstName: student.firstName,
           lastName: student.lastName,
+          email: student.email,
           status: student.status,
         },
       });

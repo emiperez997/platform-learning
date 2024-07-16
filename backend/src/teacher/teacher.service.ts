@@ -59,7 +59,7 @@ export class TeacherService {
     // Add "teacher" to the email
     const newEmail =
       teacher.email.split("@")[0] +
-      "teacher" +
+      "+teacher" +
       "@" +
       teacher.email.split("@")[1];
 
@@ -101,6 +101,7 @@ export class TeacherService {
         data: {
           firstName: teacher.firstName,
           lastName: teacher.lastName,
+          email: teacher.email,
           status: teacher.status,
         },
       });

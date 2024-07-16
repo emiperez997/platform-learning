@@ -1,5 +1,5 @@
 import { Status } from "@prisma/client";
-import { IsEnum, IsOptional, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
 
 export class UpdateStudentDto {
   @IsString()
@@ -9,6 +9,10 @@ export class UpdateStudentDto {
   @IsString()
   @IsOptional()
   lastName?: string;
+
+  @IsEmail()
+  @IsOptional()
+  email?: string;
 
   @IsString()
   @IsOptional()
