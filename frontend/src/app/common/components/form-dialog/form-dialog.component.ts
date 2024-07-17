@@ -13,9 +13,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
-import { Student } from '../../../services/students/interfaces/student';
-import { Teacher } from '../../../services/teachers/interfaces/Teacher';
+
 import { formGroup } from './validation';
+import { Teacher } from '../../../pages/main/teachers/services/models/Teacher';
+import { Student } from '../../../pages/main/students/services/models/student';
 
 @Component({
   selector: 'app-dialog',

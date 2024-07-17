@@ -1,0 +1,17 @@
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="over">
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
+
+  <div>
+    <app-toolbar (toggleEvent)="drawer.toggle()"></app-toolbar>
+
+    <div class="main-content">
+      <h1 title>Lista de Alumnos</h1>
+      <app-students></app-students>
+
+      <!-- <h1>Lista de Profesores</h1> -->
+      <!-- <app-teachers></app-teachers> -->
+    </div>
+  </div>
+</mat-drawer-container>
