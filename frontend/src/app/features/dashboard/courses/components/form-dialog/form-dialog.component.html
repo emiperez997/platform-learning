@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>{{ isEditing ? "Editar Curso" : "Crear Curso" }}</h2>
+
+<mat-dialog-content ngClass="{ skeleton: isLoading }">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="createForm" *ngIf="!isLoading">
+    @if (isEditing) {
+      <mat-form-field appearance="fill">
+        <mat-label>ID</mat-label>
+        <input matInput disabled value="{{ editingCourse?.id }}" />
+      </mat-form-field>
+    }
+
+    <mat-form-field class="w-full">
+      <mat-label>Titulo</mat-label>
+      <input
+        [ngClass]="{
+          'is-invalid': inputInvalid('title'),
+          'is-valid': inputValid('title') && createForm.get('title')?.dirty,
+        }"
+        matInput
+        name="title"
+        formControlName="title"
+      />
+
+      <mat-error> {{ getError("title") }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        placeholer="Descripción"
+        name="description"
+        formControlName="description"
+      ></textarea>
+
+      <mat-error> {{ getError("description") }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Fecha inicio - Fecha fin</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="beginDate"
+          placeholder="Fecha inicio"
+        />
+        <input matEndDate formControlName="endDate" placeholder="Fecha fin" />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+      </mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Profesor</mat-label>
+      <mat-select name="teacher" formControlName="teacherId">
+        <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+          {{ teacher.firstName }} {{ teacher.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Estado</mat-label>
+      <mat-select name="status" formControlName="isActive">
+        <mat-option value="ACTIVE">Activo</mat-option>
+        <mat-option value="INACTIVE">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  @if (
+    inputValid("title") || inputValid("description") || inputValid("beginDate")
+  ) {
+    <button mat-button (click)="onSubmit()">
+      {{ isEditing ? "Editar" : "Crear" }}
+    </button>
+  } @else {
+    <button mat-button [disabled]="true">
+      {{ isEditing ? "Editar" : "Crear" }}
+    </button>
+  }
+</mat-dialog-actions>

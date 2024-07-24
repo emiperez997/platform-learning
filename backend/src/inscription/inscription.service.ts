@@ -4,6 +4,7 @@ import { Inscription } from "./interfaces/Inscription";
 import { CreateInscriptionDto } from "./dto/CreateInscriptionDto";
 import { UpdateInscriptionDto } from "./dto/UpdateInscription";
 import { ErrorCodes } from "src/utils/ErrorCodes";
+import { log } from "console";
 
 @Injectable()
 export class InscriptionService {
@@ -14,6 +15,10 @@ export class InscriptionService {
       orderBy: {
         id: "asc",
       },
+      include: {
+        course: true,
+        student: true,
+      },
     });
   }
 
@@ -21,6 +26,10 @@ export class InscriptionService {
     const inscription = await this.prisma.inscription.findUnique({
       where: {
         id,
+      },
+      include: {
+        course: true,
+        student: true,
       },
     });
 
@@ -83,6 +92,8 @@ export class InscriptionService {
 
       return inscriptionDB;
     } catch (error) {
+      console.log(error);
+
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

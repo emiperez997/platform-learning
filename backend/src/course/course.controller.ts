@@ -16,7 +16,7 @@ import { CreateCourseDto } from "./dto/CreateCourseDto";
 import { UpdateCourseDto } from "./dto/UpdateCourseDto";
 import { AuthGuard } from "src/auth/guards/AuthGuard";
 
-@Controller("/course")
+@Controller("/courses")
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 

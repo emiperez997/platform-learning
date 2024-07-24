@@ -1,0 +1,124 @@
+<div class="table-header">
+  <mat-form-field>
+    <mat-label>Filtrar</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Pedro, Juan, Maria..."
+      #input
+      [disabled]="isLoading"
+    />
+  </mat-form-field>
+
+  @if (createButton) {
+    <button
+      mat-mini-fab
+      color="primary"
+      [disabled]="isLoading"
+      (click)="openForm()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  }
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        {{ row.id }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="course">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Curso</th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        {{ row.course?.title }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="student">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Alumno</th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        {{ row.student?.email }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        <span
+          class="badge"
+          appStatus="{{ row.status }}"
+          style="padding: 5px 10px"
+        >
+          {{ row.status | status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Fecha de Creación
+      </th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        {{ row.createdAt | date: "dd/MM/yyyy HH:mm" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Fecha de Actualización
+      </th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        {{ row.updatedAt | date: "dd/MM/yyyy HH:mm" }}
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{ skeleton: isLoading }">
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="isLoading"
+          (click)="editInscription(row)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="primary"
+          [disabled]="isLoading"
+          (click)="deleteInscription(row.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4" *ngIf="!isLoading">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <div *ngIf="firstLoading" class="skeleton-container">
+    <ng-container *ngFor="let row of skeletonRows">
+      <ngx-skeleton-loader [theme]="{ height: '30px' }"></ngx-skeleton-loader>
+    </ng-container>
+  </div>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>

@@ -64,13 +64,15 @@ model Course {
 
 model Inscription {
     id        Int      @id @default(autoincrement())
-    courseId  Int      @unique
-    studentId Int      @unique
+    courseId  Int     
+    studentId Int    
     status    InscriptionStatus @default(PENDING)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     course    Course    @relation(fields: [courseId], references: [id])
     student   Student   @relation(fields: [studentId], references: [id])
+
+    @@unique([courseId, studentId])
 }
 
 enum Role {

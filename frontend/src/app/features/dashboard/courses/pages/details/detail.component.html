@@ -1,0 +1,64 @@
+<div *ngIf="loading" class="skeleton-container">
+  <div class="back-button">
+    <button mat-icon-button routerLink="/dashboard/courses">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <ngx-skeleton-loader
+    [theme]="{ height: '50px', width: '50%' }"
+  ></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{ height: '100px' }"></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{ height: '80px' }"></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{ height: '20px' }"></ngx-skeleton-loader>
+</div>
+
+<div *ngIf="!loading">
+  <div class="back-button">
+    <button mat-icon-button routerLink="/dashboard/courses">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+
+  <h2>
+    {{ course?.title }}
+  </h2>
+
+  <p>
+    {{ course?.description }}
+  </p>
+
+  <div class="course-info">
+    <small>
+      Fecha de Inicio: {{ course?.beginDate | date: "dd/MM/yyyy HH:mm" }}
+    </small>
+
+    <small>
+      Fecha de Fin: {{ course?.endDate | date: "dd/MM/yyyy HH:mm" }}
+    </small>
+
+    <small [className]="'status'">
+      Estado:
+      <span
+        class="badge"
+        appStatus="{{ course?.status }}"
+        style="padding: 5px 10px"
+      >
+        {{ course?.status | status }}
+      </span>
+    </small>
+
+    <small *ngIf="!course?.teacher">
+      <ngx-skeleton-loader [theme]="{ height: '20px' }"></ngx-skeleton-loader>
+    </small>
+
+    <small *ngIf="course?.teacher">
+      Profesor/a: {{ course?.teacher?.firstName }}
+      {{ course?.teacher?.lastName }}
+    </small>
+
+    <app-inscriptions-table
+      [courseId]="course?.id"
+      [createButton]="false"
+    ></app-inscriptions-table>
+  </div>
+</div>

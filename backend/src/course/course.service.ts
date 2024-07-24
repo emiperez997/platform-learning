@@ -15,15 +15,8 @@ export class CourseService {
         id: "asc",
       },
       include: {
-        teacher: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-            status: true,
-          },
-        },
+        teacher: true,
+        students: true,
       },
     });
   }
@@ -32,6 +25,10 @@ export class CourseService {
     const course = await this.prisma.course.findUnique({
       where: {
         id,
+      },
+      include: {
+        teacher: true,
+        students: true,
       },
     });
 

@@ -6,8 +6,8 @@ export interface Inscription {
   id: number;
   courseId: number;
   studentId: number;
-  course?: Course[];
-  student?: Student[];
+  course?: Course;
+  student?: Student;
   status?: InscriptionStatus;
   createdAt: Date;
   updatedAt: Date;

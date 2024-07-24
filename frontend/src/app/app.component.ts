@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { ThemeService } from './common/services/theme/theme.service';
-import { MainModule } from './pages/main/main.module';
-import { AuthModule } from './pages/auth/auth.module';
+import { DashboardModule } from './features/dashboard/dashboard.module';
+import { ThemeService } from './core/services/theme/theme.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainModule, AuthModule],
+  imports: [RouterOutlet, DashboardModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [ThemeService],

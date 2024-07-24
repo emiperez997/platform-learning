@@ -16,8 +16,8 @@ import { CreateInscriptionDto } from "./dto/CreateInscriptionDto";
 import { UpdateInscriptionDto } from "./dto/UpdateInscription";
 import { AuthGuard } from "src/auth/guards/AuthGuard";
 
-@Controller("inscription")
-@UseGuards(AuthGuard)
+@Controller("inscriptions")
+// @UseGuards(AuthGuard)
 export class InscriptionController {
   constructor(private readonly inscriptionService: InscriptionService) {}
 

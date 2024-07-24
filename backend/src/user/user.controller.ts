@@ -18,7 +18,7 @@ import { UserService } from "./user.service";
 import { UpdateUserDto } from "./dto/UpdateUserDto";
 import { AdminGuard } from "src/auth/guards/AdminGuard";
 
-@Controller("/user")
+@Controller("/users")
 @UseGuards(AdminGuard)
 export class UserController {
   constructor(private readonly adminService: UserService) {}

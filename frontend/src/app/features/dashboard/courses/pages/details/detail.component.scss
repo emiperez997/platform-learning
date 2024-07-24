@@ -1,0 +1,19 @@
+.course-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 0.25rem;
+  font-size: 10px;
+}
