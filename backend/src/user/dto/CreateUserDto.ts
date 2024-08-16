@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from "class-validator";
 import { Role, Status } from "@prisma/client";
 
 export class CreateUserDto {
@@ -8,6 +8,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
+  @Length(8, 20)
   password: string;
 
   @IsEnum([Status.ACTIVE, Status.INACTIVE], {

@@ -1,6 +1,14 @@
-import { Body, Controller, Get, Post, ValidationPipe } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  ValidationPipe,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/LoginDto";
+import { Login } from "./interfaces/Login";
 
 @Controller("auth")
 export class AuthController {
@@ -8,13 +16,13 @@ export class AuthController {
 
   @Post("login")
   async login(
-    @Body(ValidationPipe) body: LoginDto,
+    @Body(ValidationPipe) login: LoginDto,
   ): Promise<{ token: string }> {
-    return this.authService.login(body.email, body.password);
+    return this.authService.login(login);
   }
 
-  @Get()
-  getMessage(): string {
-    return process.env.JWT_SECRET;
+  @Get("verify")
+  async verifyToken(@Query("token") token: string): Promise<Login> {
+    return this.authService.verifyToken(token);
   }
 }

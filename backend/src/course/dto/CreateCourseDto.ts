@@ -17,10 +17,6 @@ export class CreateCourseDto {
   @IsNotEmpty()
   description: string;
 
-  @IsInt()
-  @IsNotEmpty()
-  classNumber: number;
-
   @IsDateString()
   @IsNotEmpty()
   beginDate: Date;
@@ -28,11 +24,6 @@ export class CreateCourseDto {
   @IsDateString()
   @IsNotEmpty()
   endDate: Date;
-
-  @IsArray()
-  @IsString({ each: true })
-  @IsNotEmpty()
-  categories: string[];
 
   @IsEnum(
     [CourseStatus.STARTED, CourseStatus.FINISHED, CourseStatus.SCHEDULED],

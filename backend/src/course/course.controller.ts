@@ -32,6 +32,8 @@ export class CourseController {
 
   @Post()
   async create(@Body(ValidationPipe) course: CreateCourseDto): Promise<Course> {
+    console.log(course);
+
     return this.courseService.create(course);
   }
 

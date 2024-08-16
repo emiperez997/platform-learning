@@ -9,7 +9,7 @@ import { UserService } from "src/user/user.service";
 @Module({
   imports: [ConfigModule],
   controllers: [AuthController],
-  providers: [AuthService, UserService, PrismaService, JwtService],
+  providers: [AuthService, UserService, JwtService],
   exports: [AuthService],
 })
 export class AuthModule {}

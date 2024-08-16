@@ -10,6 +10,7 @@ import { InscriptionModule } from "./inscription/inscription.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { JwtModule } from "@nestjs/jwt";
+import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { JwtModule } from "@nestjs/jwt";
     CourseModule,
     InscriptionModule,
     AuthModule,
+    PrismaModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: "1h" },

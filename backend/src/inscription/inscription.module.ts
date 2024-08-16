@@ -7,6 +7,6 @@ import { JwtService } from "@nestjs/jwt";
 @Module({
   imports: [],
   controllers: [InscriptionController],
-  providers: [InscriptionService, PrismaService, JwtService],
+  providers: [InscriptionService, JwtService],
 })
 export class InscriptionModule {}

@@ -6,12 +6,9 @@ export interface Course {
   id: number;
   title: string;
   description: string;
-  classNumber: number;
-  currentClass: number;
   beginDate: Date;
   endDate: Date;
   status: CourseStatus;
-  categories: string[];
   students?: Inscription[];
   createdAt: Date;
   updatedAt: Date;

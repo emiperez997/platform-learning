@@ -55,11 +55,8 @@ export class CourseService {
         data: {
           title: course.title,
           description: course.description,
-          classNumber: course.classNumber,
-          currentClass: 0,
           beginDate: new Date(course.beginDate),
           endDate: new Date(course.endDate),
-          categories: course.categories,
           status: course.status,
           teacher: {
             connect: {
@@ -91,7 +88,6 @@ export class CourseService {
       description: course.description,
       beginDate: course.beginDate ? new Date(course.beginDate) : undefined,
       endDate: course.endDate ? new Date(course.endDate) : undefined,
-      categories: course.categories,
       status: course.status,
     };
 

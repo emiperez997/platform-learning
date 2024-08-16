@@ -25,11 +25,6 @@ export class UpdateCourseDto {
   @IsOptional()
   endDate?: Date;
 
-  @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  categories?: string[];
-
   @IsEnum(
     [CourseStatus.STARTED, CourseStatus.FINISHED, CourseStatus.SCHEDULED],
     { message: "Invalid Status" },

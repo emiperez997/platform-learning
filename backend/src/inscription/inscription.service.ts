@@ -55,6 +55,10 @@ export class InscriptionService {
             },
           },
         },
+        include: {
+          course: true,
+          student: true,
+        },
       });
 
       return inscriptionDB;
@@ -87,6 +91,10 @@ export class InscriptionService {
         },
         data: {
           status: inscription.status,
+        },
+        include: {
+          course: true,
+          student: true,
         },
       });
 
