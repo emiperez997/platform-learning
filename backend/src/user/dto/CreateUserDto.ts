@@ -8,7 +8,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(8, 20)
+  @Length(5, 20)
   password: string;
 
   @IsEnum([Status.ACTIVE, Status.INACTIVE], {
